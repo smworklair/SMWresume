@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+  />
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maxim Oliva - Web Developer</title>
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap">
+
+  <!-- Font Awesome for Icons -->
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-d+f14QZecqN3o6D8eVYl8DjbLKQkDgXpL3lqPq5VxgNyIYVZHjV+QmkX60Ft8S1aLjC7KpQCg4kzBacapMVWcw=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  >
+
+  <!-- AOS for Scroll Animations (optional) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    /* =============================
+       1) GLOBAL RESET & BASE STYLES
+    ============================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Темная тема по умолчанию */
+    body {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+    /* Светлая тема при добавлении класса .light-mode */
+    body.light-mode {
+      background-color: #fffbea;
+      color: #333;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: none; /* Убираем стандартное подчёркивание */
+    }
+    .no-scroll {
+      overflow: hidden; /* Отключение прокрутки фона при открытии модальных окон */
+    }
+
+    /* =============================
+       2) THEME TOGGLE
+    ============================== */
+    .theme-toggle-container {
+      position: fixed;
+      bottom: 20px;
+      right: 80px; /* Смещение вправо, чтобы не перекрывать аватарку */
+      z-index: 1002;
+      display: flex;
+      align-items: center;
+      background: rgba(156, 39, 176, 0.4); /* Полупрозрачный фиолетовый */
+      padding: 5px 10px;
+      border-radius: 25px;
+      backdrop-filter: blur(5px);
+      transition: background 0.3s;
+    }
+    body.light-mode .theme-toggle-container {
+      background: rgba(218, 186, 124, 0.4); /* Полупрозрачный жёлтый */
+    }
+    .theme-toggle-container label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      width: 60px;
+      height: 34px;
+    }
+    .theme-toggle-container input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    /* Удаление иконок */
+    /*
+    .theme-toggle-container .slider::after {
+      content: '🌙';
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      font-size: 20px;
+      color: #fff;
+      transition: transform 0.4s;
+    }
+    body.light-mode .theme-toggle-container .slider::after {
+      content: '☀️';
+      right: 8px;
+      left: unset;
+      transform: translateX(0);
+    }
+    */
+
+    /* =============================
+       3) HEADER
+    ============================== */
+    header {
+      background: linear-gradient(135deg, rgb(5, 0, 5), rgba(28, 5, 48, 0.97));
+      color: #ffffff;
+      text-align: center;
+      padding: 2.5rem 0;
+      transition: background 0.3s;
+    }
+    body.light-mode header {
+      background: linear-gradient(135deg, #6cc1ab, #c8c661);
+      color: #ffffff;
+    }
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap; /* Чтобы новые ссылки не ломали макет на меньших экранах */
+    }
+    nav a {
+      font-weight: 600;
+      position: relative;
+      font-size: 1.1rem;
+      padding: 0.5rem 0;
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center; /* Выравнивание иконки и текста по центру */
+    }
+    nav a i {
+      margin-right: 8px; /* Отступ между иконкой и текстом */
+      font-size: 1.2rem;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #fff;
+      left: 0;
+      bottom: -2px; /* Немного ниже текста */
+      transition: width 0.3s;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    body.light-mode nav a::after {
+      background: #333;
+    }
+
+    /* =============================
+       4) MAIN CONTAINER
+    ============================== */
+    .container {
+      display: flex;
+      min-height: 100vh;
+      max-width: 1300px;
+      margin: 2rem auto;
+      gap: 2rem;
+      padding: 0 1.5rem;
+    }
+
+    /* =============================
+       5) MAIN CONTENT
+    ============================== */
+    .main-content {
+      flex: 1;
+      background-color: rgba(42, 42, 42, 0.85); /* Полупрозрачный тёмный фон */
+      padding: 1.5rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+      transition: background-color 0.3s;
+    }
+    body.light-mode .main-content {
+      background-color: rgba(255, 255, 255, 0.85); /* Полупрозрачный светлый фон */
+      color: #333;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .section h2 {
+      margin-bottom: 0.8rem;
+      color: #bd74ca;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center; /* Выравнивание иконки и текста по центру */
+    }
+    .section h2 i {
+      margin-right: 8px; /* Отступ между иконкой и текстом */
+      font-size: 1.5rem;
+    }
+    body.light-mode .section h2 {
+      color: #b8a947;
+    }
+    .section p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    /* =============================
+       6) GRID (SKILLS / PROJECTS)
+    ============================== */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: rgba(58, 58, 58, 0.85); /* Полупрозрачный тёмный фон */
+      padding: 1rem;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      min-height: 170px;
+    }
+    body.light-mode .card {
+      background-color: rgba(240, 240, 240, 0.85); /* Полупрозрачный светлый фон */
+      color: #333;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .card h3 {
+      color: #ba68c8;
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center; /* Выравнивание иконки и текста по центру */
+    }
+    .card h3 i {
+      margin-right: 8px; /* Отступ между иконкой и текстом */
+      font-size: 1.2rem;
+    }
+    body.light-mode .card h3 {
+      color: #2e4e4e;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: #ccc;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+    body.light-mode .card p {
+      color: #444;
+    }
+    .card .cta-button {
+      margin-top: auto; /* Держим кнопку внизу, если текст короткий */
+      padding: 0.6rem 1rem;
+      background-color: #ba68c8;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      align-items: center; /* Выравнивание иконки и текста по центру */
+    }
+    .card .cta-button i {
+      margin-right: 5px; /* Отступ между иконкой и текстом */
+      font-size: 1rem;
+    }
+    .card .cta-button:hover {
+      background-color: #9c27b0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    body.light-mode .card .cta-button {
+      background-color: #f7b42c;
+      color: #333;
+    }
+    body.light-mode .card .cta-button:hover {
+      background-color: #fcd45d;
+    }
+
+    /* =============================
+       7) CONTACT
+    ============================== */
+    .contact-section {
+      margin-top: 1.2rem;
+    }
+    .telegram-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.8rem 1.6rem;
+      background-color: rgba(0, 136, 204, 0.9); /* Полупрозрачный синий */
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+    .telegram-button:hover {
+      background-color: rgba(0, 170, 255, 0.9); /* Полупрозрачный яркий синий */
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .telegram-button i {
+      margin-right: 0.5rem;
+    }
+    body.light-mode .telegram-button {
+      background-color: rgba(62, 174, 241, 0.9); /* Полупрозрачный голубой */
+    }
+    body.light-mode .telegram-button:hover {
+      background-color: rgba(101, 196, 250, 0.9); /* Полупрозрачный яркий голубой */
+    }
+
+    /* =============================
+       8) MODAL (POP-UP)
+    ============================== */
+    .info-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none; /* Скрыто по умолчанию */
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .info-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+    .info-modal {
+      background-color: rgba(42, 42, 42, 0.85); /* Полупрозрачный тёмный фон */
+      padding: 2rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 700px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease;
+      transition: background-color 0.3s;
+    }
+    body.light-mode .info-modal {
+      background-color: rgba(255, 255, 255, 0.85); /* Полупрозрачный светлый фон */
+      color: #333;
+    }
+    .info-modal h2 {
+      margin-bottom: 1rem;
+      color: #ba68c8;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: center; /* Выравнивание иконки и текста по центру */
+    }
+    .info-modal h2 i {
+      margin-right: 8px; /* Отступ между иконкой и текстом */
+      font-size: 1.5rem;
+    }
+    body.light-mode .info-modal h2 {
+      color: #9c27b0;
+    }
+    .info-modal p {
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      color: #e0e0e0;
+      line-height: 1.5;
+    }
+    body.light-mode .info-modal p {
+      color: #333;
+    }
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 68, 68, 0.9); /* Полупрозрачный красный */
+      border: none;
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .close-modal:hover {
+      background: rgba(255, 119, 119, 0.9); /* Полупрозрачный светло-красный */
+      transform: scale(1.1);
+    }
+    .info-media img,
+    .info-media iframe {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* =============================
+       9) FOOTER
+    ============================== */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background-color: rgba(42, 42, 42, 0.85); /* Полупрозрачный тёмный фон */
+      color: #e0e0e0;
+      margin-top: 2rem;
+      transition: background-color 0.3s;
+    }
+    body.light-mode footer {
+      background-color: rgba(240, 240, 240, 0.85); /* Полупрозрачный светлый фон */
+      color: #333;
+    }
+
+    /* =============================
+       10) RESPONSIVE MEDIA QUERIES
+    ============================== */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .theme-toggle-container {
+        bottom: 80px;
+        right: 20px;
+      }
+      .theme-toggle-container label {
+        width: 50px;
+        height: 28px;
+      }
+      .slider:before {
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+      }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+    }
+
+    /* =============================
+       11) AVATAR IN LEFT TOP CORNER
+    ============================== */
+    .fixed-avatar {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: url('images/GVF.jpg') center/cover no-repeat;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      z-index: 1003;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: transform 0.3s, border 0.3s;
+    }
+    .fixed-avatar:hover {
+      transform: scale(1.1);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+    body.light-mode .fixed-avatar {
+      border: 2px solid rgba(0, 0, 0, 0.5);
+    }
+    body.light-mode .fixed-avatar:hover {
+      border: 2px solid rgba(0, 0, 0, 0.8);
+    }
+
+    /* =============================
+       12) MODAL BUTTON
+    ============================== */
+    /* Современные кнопки внутри модального окна */
+    .info-modal .cta-button {
+      padding: 0.6rem 1rem;
+      background-color: #ba68c8;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      align-items: center; /* Выравнивание иконки и текста по центру */
+      margin-top: 1rem;
+    }
+    .info-modal .cta-button i {
+      margin-right: 5px; /* Отступ между иконкой и текстом */
+      font-size: 1rem;
+    }
+    .info-modal .cta-button:hover {
+      background-color: #9c27b0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    body.light-mode .info-modal .cta-button {
+      background-color: #f7b42c;
+      color: #333;
+    }
+    body.light-mode .info-modal .cta-button:hover {
+      background-color: #fcd45d;
+    }
+  </style>
+</head>
+<body>
+<!-- FIXED AVATAR -->
+<div class="fixed-avatar" id="avatar" aria-label="Profile Avatar"></div>
+
+<!-- THEME TOGGLE SWITCH -->
+<div class="theme-toggle-container">
+  <label class="switch">
+    <input type="checkbox" id="themeToggle" aria-label="Переключение темы">
+    <span class="slider"></span>
+  </label>
+</div>
+
+
+<!-- HEADER -->
+<header>
+  <h1><i class="fas fa-clipboard-list"></i> Maxim Oliva</h1>
+  <p>Web Developer | Designer | Creator</p>
+  <nav>
+    <!-- Навигационные ссылки -->
+    <a href="#about"><i class="fas fa-user"></i> About</a>
+    <a href="#skills"><i class="fas fa-tools"></i> Skills</a>
+    <a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a>
+    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+
+    <!-- GitHub и LinkedIn в верхней навигации -->
+    <a href="https://github.com/smworklair" target="_blank" aria-label="GitHub">
+      <i class="fab fa-github"></i> GitHub
+    </a>
+    <a href="https://www.linkedin.com/in/maxim-oliva-239914343" target="_blank" aria-label="LinkedIn">
+      <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+  </nav>
+</header>
+
+<!-- CONTAINER -->
+<div class="container">
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <h1><i class="fas fa-clipboard-list"></i> Welcome to My Portfolio</h1>
+    <p>Showcase your projects, blog posts, or anything else here!</p>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section">
+      <h2><i class="fas fa-user"></i> About Me</h2>
+      <p>
+        Hello! I'm Maxim, a passionate Web Developer based in London.
+        I specialize in creating dynamic, responsive, user-friendly
+        websites that provide seamless user experiences.
+      </p>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="section">
+      <h2><i class="fas fa-tools"></i> Skills</h2>
+      <div class="grid-cards">
+        <!-- SKILL 1 -->
+        <div class="card">
+          <h3><i class="fab fa-html5"></i> HTML &amp; CSS</h3>
+          <p>Crafting semantic markup & flexible layouts.</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="HTML & CSS"
+                  data-text="Expert in semantic HTML, responsive CSS, plus cross-browser testing & Sass."
+                  data-media='[
+                {"type":"image","src":"https://via.placeholder.com/600x400?text=HTML%2FCSS+Sample","alt":"HTML/CSS Sample"}
+              ]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+        <!-- SKILL 2 -->
+        <div class="card">
+          <h3><i class="fab fa-js"></i> JavaScript</h3>
+          <p>Interactive web apps, ES6+ features.</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="JavaScript"
+                  data-text="Proficient in DOM manipulation, async/await, building dynamic single-page apps, etc."
+                  data-media='[
+                {"type":"video","src":"https://www.youtube.com/embed/dQw4w9WgXcQ"}
+              ]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+        <!-- SKILL 3 -->
+        <div class="card">
+          <h3><i class="fab fa-react"></i> React.js</h3>
+          <p>Building scalable front-end apps with React hooks.</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="React.js"
+                  data-text="Developing single-page apps with React, focusing on performance & best practices."
+                  data-media='[]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+        <!-- SKILL 4 -->
+        <div class="card">
+          <h3><i class="fab fa-node"></i> Node.js &amp; Express</h3>
+          <p>Robust back-end services & REST APIs.</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="Node.js & Express"
+                  data-text="Full-stack solutions with Node.js, Express, database integration & JWT auth, etc."
+                  data-media='[]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="section">
+      <h2><i class="fas fa-project-diagram"></i> Projects</h2>
+      <div class="grid-cards">
+        <!-- PROJECT 1 -->
+        <div class="card">
+          <h3><i class="fas fa-briefcase"></i> Portfolio Website</h3>
+          <p>A fully responsive personal portfolio showcasing my projects & skills.</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="Portfolio Website"
+                  data-text="Built with HTML, CSS, and JS. Features modals & smooth scrolling, highlighting personal skill sets & code examples."
+                  data-media='[
+                {"type":"image","src":"https://via.placeholder.com/600x400?text=Portfolio+Screenshot","alt":"Portfolio Screenshot"}
+              ]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+        <!-- PROJECT 2 -->
+        <div class="card">
+          <h3><i class="fas fa-shopping-cart"></i> E-commerce App</h3>
+          <p>Full-stack e-commerce platform with payment integration & user auth.</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="E-commerce App"
+                  data-text="React front-end, Node.js/Express back-end, integrated payments, secure user authentication."
+                  data-media='[
+                {"type": "video", "src": "https://www.youtube.com/embed/dQw4w9WgXcQ"}
+              ]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+        <!-- PROJECT 3 -->
+        <div class="card">
+          <h3><i class="fas fa-comments"></i> Chat Application</h3>
+          <p>Amazing real-time chat using WebSockets and Node.js!</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="Chat Application"
+                  data-text="Utilizes Socket.io for real-time messaging, Node.js server, channels & direct messages, plus a React front-end."
+                  data-media='[]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+        <!-- PROJECT 4 -->
+        <div class="card">
+          <h3><i class="fas fa-blog"></i> Blog Platform</h3>
+          <p>A multi-user blogging platform with comment & media support.</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="Blog Platform"
+                  data-text="Full CRUD with user roles, file uploads, SEO-friendly URLs, and more."
+                  data-media='[
+                {"type":"image","src":"https://via.placeholder.com/600x400?text=Blog+Platform","alt":"Blog Platform screenshot"}
+              ]'
+          >
+            <i class="fas fa-info-circle"></i> More Info
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section">
+      <h2><i class="fas fa-envelope"></i> Contact</h2>
+      <p>
+        I'm looking forward to hearing about your projects and discussing
+        how I can help bring them to life. Feel free to contact me via Telegram directly:
+      </p>
+      <div class="contact-section">
+        <a
+                href="https://t.me/m/6nSE254TYmYy"
+                class="telegram-button"
+                target="_blank"
+                aria-label="Contact via Telegram"
+        >
+          <i class="fab fa-telegram-plane"></i> Send a Telegram
+        </a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2024 Maxim Oliva. All rights reserved.</p>
+</footer>
+
+<!-- MODAL OVERLAY -->
+<div
+        class="info-overlay"
+        id="infoOverlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="infoTitle"
+>
+  <div class="info-modal">
+    <button class="close-modal" id="closeInfoBtn" aria-label="Close Modal">
+      &times;
+    </button>
+    <h2 id="infoTitle"><i class="fas fa-project-diagram"></i> Modal Title</h2>
+    <p id="infoText">Modal content goes here...</p>
+    <div id="infoMedia" class="info-media">
+      <!-- Dynamically loaded images or videos go here -->
+    </div>
+  </div>
+</div>
+
+<!-- MODAL OVERLAY FOR AVATAR CLICK -->
+<div
+        class="info-overlay"
+        id="avatarOverlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="avatarInfoTitle"
+>
+  <div class="info-modal">
+    <button class="close-modal" id="closeAvatarInfoBtn" aria-label="Close Modal">
+      &times;
+    </button>
+    <h2 id="avatarInfoTitle"><i class="fas fa-user"></i> Maxim Oliva</h2>
+    <p>Web Developer with a passion for creating dynamic and responsive websites.</p>
+    <p><a href="mailto:smworklair@gmail.com">smworklair@gmail.com</a></p>
+    <p>London, UK</p>
+    <button
+            class="cta-button open-info"
+            data-title="More About Me"
+            data-text="I love building visually appealing & interactive websites, focusing on user experience & performance. Skilled in HTML, CSS, JavaScript, React, Node.js, & more."
+            data-media='[]'
+    >
+      <i class="fas fa-info-circle"></i> More About Me
+    </button>
+  </div>
+</div>
+
+<!-- AOS Library Script (optional) -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+
+<!-- Main JavaScript -->
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize AOS if available
+    if (typeof AOS !== 'undefined') {
+      AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+    }
+
+    // Theme Toggle with LocalStorage
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Получение сохранённой темы из localStorage
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+
+    // Инициализация темы на основе сохранённого значения
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-mode');
+      themeToggle.checked = true; // Устанавливаем состояние переключателя
+    } else {
+      themeToggle.checked = false;
+    }
+
+    // Функция для переключения темы
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      const isLightMode = document.body.classList.contains('light-mode');
+      localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+    }
+
+    // Добавление обработчика события для переключателя темы
+    themeToggle.addEventListener('change', toggleTheme);
+
+    // Основная модальная логика
+    const infoOverlay = document.getElementById('infoOverlay');
+    const closeInfoBtn = document.getElementById('closeInfoBtn');
+    const infoTitleEl = document.getElementById('infoTitle');
+    const infoTextEl = document.getElementById('infoText');
+    const infoMediaEl = document.getElementById('infoMedia');
+    const openInfoButtons = document.querySelectorAll('.open-info');
+
+    function openInfoModal(title, text, media) {
+      infoTitleEl.innerHTML = `<i class="fas fa-project-diagram"></i> ${title}`;
+      infoTextEl.textContent = text;
+      infoMediaEl.innerHTML = '';
+
+      // Если есть медиа, добавляем его
+      if (media && Array.isArray(media)) {
+        media.forEach(item => {
+          if (item.type === 'image') {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = item.alt || 'Project Image';
+            img.loading = 'lazy';
+            infoMediaEl.appendChild(img);
+          } else if (item.type === 'video') {
+            const iframe = document.createElement('iframe');
+            iframe.src = item.src;
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.loading = 'lazy';
+            iframe.style.width = '100%';
+            iframe.style.height = '315px';
+            infoMediaEl.appendChild(iframe);
+          }
+        });
+      }
+
+      infoOverlay.classList.add('active');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeInfoModal() {
+      infoOverlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+      infoTitleEl.innerHTML = '';
+      infoTextEl.textContent = '';
+      infoMediaEl.innerHTML = '';
+    }
+
+    openInfoButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const title = btn.getAttribute('data-title');
+        const text = btn.getAttribute('data-text');
+        const media = JSON.parse(btn.getAttribute('data-media') || '[]');
+        openInfoModal(title, text, media);
+      });
+    });
+
+    closeInfoBtn.addEventListener('click', closeInfoModal);
+    infoOverlay.addEventListener('click', (e) => {
+      // Закрытие модального окна при клике вне его содержимого
+      if (e.target === infoOverlay) {
+        closeInfoModal();
+      }
+    });
+    document.querySelector('.info-modal').addEventListener('click', (evt) => {
+      evt.stopPropagation(); // Предотвращаем закрытие модального окна при клике внутри него
+    });
+
+    // Логика для модального окна при клике на аватарку
+    const avatar = document.getElementById('avatar');
+    const avatarOverlay = document.getElementById('avatarOverlay');
+    const closeAvatarInfoBtn = document.getElementById('closeAvatarInfoBtn');
+
+    avatar.addEventListener('click', () => {
+      avatarOverlay.classList.add('active');
+      document.body.classList.add('no-scroll');
+    });
+
+    closeAvatarInfoBtn.addEventListener('click', () => {
+      avatarOverlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    });
+
+    avatarOverlay.addEventListener('click', (e) => {
+      if (e.target === avatarOverlay) {
+        avatarOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+      }
+    });
+    document.querySelector('#avatarOverlay .info-modal').addEventListener('click', (evt) => {
+      evt.stopPropagation();
+    });
+
+    // Закрытие модальных окон при нажатии клавиши Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeInfoModal();
+        avatarOverlay.classList.remove('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+

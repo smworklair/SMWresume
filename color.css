@@ -1,0 +1,624 @@
+/*********************************************
+ *
+ * 0) GLOBAL SETTINGS & RESET STYLES
+ *
+ *********************************************/
+
+/* Reset margins, paddings, and box-sizing. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base fonts, dark theme by default. */
+html, body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+/* Dark theme by default */
+body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* Light theme activated by adding .light-mode class to <body> */
+body.light-mode {
+    background-color: #fffbea;
+    color: #333;
+}
+
+/* Disable scroll when modal is open */
+.no-scroll {
+    overflow: hidden;
+}
+
+/* Links: general style + hover */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/*********************************************
+ *
+ * 1) THEME TOGGLE BUTTON (THEME TOGGLE)
+ *
+ *********************************************/
+
+/* Container for theme toggle */
+.theme-toggle-container {
+    position: fixed;
+    bottom: 20px;
+    right: 80px; /* Shift right to not overlap sidebar */
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    background: rgba(156, 39, 176, 0.4); /* Semi-transparent purple */
+    padding: 5px 10px;
+    border-radius: 25px;
+    backdrop-filter: blur(5px);
+    transition: background 0.3s;
+}
+
+body.light-mode .theme-toggle-container {
+    background: rgba(247, 180, 44, 0.4); /* Semi-transparent yellow */
+}
+
+/* Styles for the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+/* Toggle state */
+.switch input:checked + .slider {
+    background-color: #2196F3;
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Remove slider icons */
+.slider::after {
+    content: none;
+}
+
+/*********************************************
+ *
+ * 2) HEADER
+ *
+ *********************************************/
+
+header {
+    background: linear-gradient(135deg, #3fce82, #1ea0a6);
+    color: #fff;
+    text-align: center;
+    padding: 2.5rem 0;
+    transition: background 0.3s;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+header p {
+    font-size: 1.2rem;
+}
+
+/* Change background in light mode */
+body.light-mode header {
+    background: linear-gradient(135deg, #61a895, #fcd45d);
+    color: #ffffff;
+}
+
+/* Navigation in header */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+nav a {
+    font-weight: 600;
+    position: relative;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+/* Animated underline on hover */
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    left: 0;
+    bottom: -2px;
+    transition: width 0.3s;
+}
+nav a:hover::after {
+    width: 100%;
+}
+/* Underline color in light mode */
+body.light-mode nav a::after {
+    background: #333;
+}
+
+/*********************************************
+ *
+ * 3) MAIN CONTAINER
+ *
+ *********************************************/
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    max-width: 1300px;
+    margin: 2rem auto;
+    gap: 2rem;
+    padding: 0 1.5rem;
+    position: relative;
+}
+
+/*********************************************
+ *
+ * 4) SIDEBAR
+ *
+ *********************************************/
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    background-color: #2a2a2a;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    position: fixed;
+    top: 50%;
+    left: -220px; /* Hide off-screen */
+    transform: translateY(-50%);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+/* Show on hover */
+.sidebar:hover {
+    left: 0;
+}
+/* Light mode colors */
+body.light-mode .sidebar {
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Profile picture in sidebar */
+.profile-pic {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: url('https://via.placeholder.com/100') center/cover no-repeat;
+    margin: 0 auto 15px auto;
+    border: 2px solid #1e88e5; /* Новый синий цвет */
+    transition: border-color 0.3s;
+}
+body.light-mode .profile-pic {
+    border-color: #f7b42c;
+}
+
+/* Name in sidebar */
+.sidebar h2 {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #1e88e5; /* Новый синий цвет */
+}
+
+/* Short description */
+.sidebar p {
+    text-align: center;
+    font-size: 0.9em;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+/* Button in sidebar */
+.cta-button-sidebar {
+    display: block;
+    width: 100%;
+    margin: 12px 0;
+    padding: 0.6rem 0.8rem;
+    background-color: #1e88e5; /* Новый синий цвет */
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.cta-button-sidebar:hover {
+    background-color: #1565c0; /* Тёмный оттенок синего при наведении */
+    transform: scale(1.03);
+}
+body.light-mode .cta-button-sidebar {
+    background-color: #f7b42c;
+    color: #333;
+}
+body.light-mode .cta-button-sidebar:hover {
+    background-color: #fcd45d;
+}
+
+/* Social icons in sidebar */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.social-icons a {
+    color: #1e88e5; /* Новый цвет иконок */
+    font-size: 1.4rem;
+    transition: color 0.3s, transform 0.3s;
+}
+body.light-mode .social-icons a {
+    color: #f7b42c; /* Новый цвет иконок в светлой теме */
+}
+.social-icons a:hover {
+    color: #1565c0; /* Тёмный оттенок синего при наведении */
+    transform: scale(1.1);
+}
+body.light-mode .social-icons a:hover {
+    color: #fcd45d;
+}
+
+/*********************************************
+ *
+ * 5) MAIN CONTENT
+ *
+ *********************************************/
+
+.main-content {
+    flex: 1;
+    background-color: #2a2a2a;
+    padding: 1.5rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    transition: background-color 0.3s, color 0.3s;
+}
+body.light-mode .main-content {
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Blocks inside */
+.section {
+    margin-bottom: 2rem;
+}
+.section h2 {
+    margin-bottom: 0.8rem;
+    color: #1e88e5; /* Новый синий цвет заголовков */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center; /* Центрирование иконки и текста */
+}
+.section h2 i {
+    margin-right: 8px; /* Отступ между иконкой и текстом */
+    font-size: 1.5rem;
+}
+.section p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/*********************************************
+ *
+ * 6) GRID (SKILLS / PROJECTS) + CARDS
+ *
+ *********************************************/
+
+/* Parent grid */
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* The cards themselves */
+.card {
+    display: flex;
+    flex-direction: column;
+    background: #3a3a3a;
+    padding: 1rem;
+    border-radius: 10px; /* Increased border radius */
+    transition: transform 0.3s, box-shadow 0.3s; /* Added shadow transition */
+    cursor: pointer;
+    min-height: 170px;
+}
+body.light-mode .card {
+    background-color: #f0f0f0;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.card:hover {
+    transform: translateY(-5px); /* Increased shift */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Added shadow on hover */
+}
+.card h3 {
+    color: #1e88e5; /* Новый синий цвет заголовков карточек */
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center; /* Центрирование иконки и текста */
+}
+.card h3 i {
+    margin-right: 8px; /* Отступ между иконкой и текстом */
+    font-size: 1.2rem;
+}
+.card p {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+body.light-mode .card p {
+    color: #444;
+}
+
+/* Button in card */
+.card .cta-button {
+    margin-top: auto;
+    padding: 0.6rem 1rem;
+    background-color: #1e88e5; /* Новый синий цвет кнопок */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    align-items: center; /* Центрирование иконки и текста */
+}
+.card .cta-button i {
+    margin-right: 5px; /* Отступ между иконкой и текстом */
+    font-size: 1rem;
+}
+.card .cta-button:hover {
+    background-color: #1565c0; /* Тёмный оттенок синего при наведении */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+body.light-mode .card .cta-button {
+    background-color: #1e88e5; /* Новый синий цвет кнопок в светлой теме */
+    color: #fff;
+}
+body.light-mode .card .cta-button:hover {
+    background-color: #1565c0; /* Тёмный оттенок синего при наведении */
+}
+
+/* Additional states */
+.card:active {
+    transform: scale(0.98);
+}
+
+/*********************************************
+ *
+ * 7) MODAL (POP-UP) + OVERLAY
+ *
+ *********************************************/
+
+/* Dark overlay */
+.info-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.info-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Modal container */
+.info-modal {
+    background-color: #2a2a2a;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.info-overlay.active .info-modal {
+    transform: translateY(0);
+    opacity: 1;
+}
+body.light-mode .info-modal {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Headings and text in modal */
+.info-modal h2 {
+    margin-bottom: 1rem;
+    color: #1e88e5; /* Новый синий цвет заголовков */
+    font-family: 'Montserrat', sans-serif;
+}
+body.light-mode .info-modal h2 {
+    color: #1e88e5; /* Новый синий цвет заголовков */
+}
+.info-modal p {
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+body.light-mode .info-modal p {
+    color: #333;
+}
+
+/* Close button for modal */
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #ff4444;
+    border: none;
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.close-modal:hover {
+    background: #ff7777;
+    transform: scale(1.1);
+}
+
+/* Media inside modal (images, videos) */
+.info-media img,
+.info-media iframe {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/*********************************************
+ *
+ * 8) FOOTER
+ *
+ *********************************************/
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    margin-top: 2rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+body.light-mode footer {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/*********************************************
+ *
+ * 9) RESPONSIVE MEDIA QUERIES
+ *
+ *********************************************/
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 200px;
+        position: fixed;
+        top: 0;
+        left: -220px;
+        transform: translateY(0);
+        height: 100vh;
+        padding-top: 2rem;
+    }
+    .sidebar:hover {
+        left: 0;
+    }
+    .main-content {
+        margin-top: 220px; /* Prevent main content from being overlapped by sidebar */
+    }
+    .profile-pic {
+        margin: 0 auto 15px auto;
+    }
+    .grid-cards {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    .bot-container, .drawing-container {
+        width: 90%;
+    }
+}
+
+/*********************************************
+ *
+ * 10) FOCUS FOR ACCESSIBILITY
+ *
+ *********************************************/
+
+a:focus, button:focus, input:focus {
+    outline: 2px solid #ba68c8;
+    outline-offset: 2px;
+}
+body.light-mode a:focus,
+body.light-mode button:focus,
+body.light-mode input:focus {
+    outline: 2px solid #1e88e5; /* Новый синий цвет фокуса */
+}
