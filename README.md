@@ -1,6 +1,10 @@
 --------------------------------------------------------------------------------
 # SMWresume
 
+WEBsite;
+https://sm-wresume.vercel.app
+
+
 ## Overview
 SMWresume is a personal resume or portfolio project designed to showcase skills, experiences, and achievements. It was built primarily with HTML, CSS, and JavaScript, making it easy to view in any modern web browser without additional dependencies. This repository can serve as a template for individuals looking to create their own responsive, visually appealing resume websites. By hosting it on GitHub Pages (or any other static web hosting platform), you can quickly share your professional profile online.
 
