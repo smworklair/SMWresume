@@ -5,15 +5,23 @@ WEBsite:
 https://sm-wresume.vercel.app
 
 Social networks:
+
 Telegram channel with video projects - https://t.me/+2nv04inVqSVjNmI6
+
 Linkedin - https://www.linkedin.com/in/maxim-oliva-239914343/
+
 X - https://x.com/smworklair
 
 Contacts for communication:
+
 Mail - smworklair@gmail.com
+
 Telegram - @smworklair
+
 Linkedin - https://www.linkedin.com/in/maxim-oliva-239914343/
+
 X - https://x.com/smworklair
+
 2Mail - mirshokha@gmail.com
 
 
