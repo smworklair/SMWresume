@@ -1,10 +1,10 @@
 --------------------------------------------------------------------------------
 # SMWresume
 
-WEBsite:
+   WEBsite:
 https://sm-wresume.vercel.app
 
-Social networks:
+   Social networks:
 
 Telegram channel with video projects - https://t.me/+2nv04inVqSVjNmI6
 
@@ -12,7 +12,7 @@ Linkedin - https://www.linkedin.com/in/maxim-oliva-239914343/
 
 X - https://x.com/smworklair
 
-Contacts for communication:
+   Contacts for communication:
 
 Mail - smworklair@gmail.com
 
