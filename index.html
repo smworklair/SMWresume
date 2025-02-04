@@ -152,7 +152,6 @@
     }
 
     .profile-avatar {
-      /* Важно: используем sticky вместо fixed */
       position: sticky;
       top: 0; /* Будет прилипать к верхней части при скролле */
       width: 60px;
@@ -163,8 +162,8 @@
       border: 2px solid rgba(255, 255, 255, 0.5);
       cursor: pointer;
       transition: transform 0.3s, border 0.3s;
-      z-index: 10; /* чтобы аватарка не пряталась за другими элементами */
-      margin: 0 auto; /* Чтобы она была по центру в хедере */
+      z-index: 10; 
+      margin: 0 auto; 
       display: block;
     }
     .profile-avatar:hover {
@@ -191,7 +190,7 @@
       justify-content: center;
       gap: 2rem;
       margin-top: 1rem;
-      flex-wrap: wrap; /* Чтобы новые ссылки не ломали макет на меньших экранах */
+      flex-wrap: wrap; 
     }
     nav a {
       font-weight: 600;
@@ -205,7 +204,7 @@
       align-items: center; /* Выравнивание иконки и текста по центру */
     }
     nav a i {
-      margin-right: 8px; /* Отступ между иконкой и текстом */
+      margin-right: 8px; 
       font-size: 1.2rem;
     }
     nav a::after {
@@ -215,7 +214,7 @@
       height: 2px;
       background: #fff;
       left: 0;
-      bottom: -2px; /* Немного ниже текста */
+      bottom: -2px; 
       transition: width 0.3s;
     }
     nav a:hover::after {
@@ -263,10 +262,10 @@
       font-size: 1.6rem;
       transition: color 0.3s;
       display: flex;
-      align-items: center; /* Выравнивание иконки и текста по центру */
+      align-items: center; 
     }
     .section h2 i {
-      margin-right: 8px; /* Отступ между иконкой и текстом */
+      margin-right: 8px; 
       font-size: 1.5rem;
     }
     body.light-mode .section h2 {
@@ -311,10 +310,10 @@
       margin-bottom: 0.5rem;
       font-size: 1.05rem;
       display: flex;
-      align-items: center; /* Выравнивание иконки и текста по центру */
+      align-items: center; 
     }
     .card h3 i {
-      margin-right: 8px; /* Отступ между иконкой и текстом */
+      margin-right: 8px; 
       font-size: 1.2rem;
     }
     body.light-mode .card h3 {
@@ -330,7 +329,7 @@
       color: #444;
     }
     .card .cta-button {
-      margin-top: auto; /* Держим кнопку внизу, если текст короткий */
+      margin-top: auto; 
       padding: 0.6rem 1rem;
       background-color: #ba68c8;
       color: #fff;
@@ -341,10 +340,10 @@
       cursor: pointer;
       transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
       display: flex;
-      align-items: center; /* Выравнивание иконки и текста по центру */
+      align-items: center;
     }
     .card .cta-button i {
-      margin-right: 5px; /* Отступ между иконкой и текстом */
+      margin-right: 5px;
       font-size: 1rem;
     }
     .card .cta-button:hover {
