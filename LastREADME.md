@@ -1,4 +1,5 @@
 --------------------------------------------------------------------------------
+LASTUP
 # SMWresume
 
    WEBsite:
@@ -102,7 +103,7 @@ Simply copy and paste this text into your `README.md` and customize it to match 
 <img width="1440" alt="Снимок экрана 2025-01-07 в 02 45 47" src="https://github.com/user-attachments/assets/cb77ba78-88af-4637-a27b-5293ed9c6b2c" />
 
 
-
+LAST UP
 
 
 
