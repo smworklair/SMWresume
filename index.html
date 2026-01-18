@@ -1,3 +1,4 @@
+<!-- Это последняя правка сайта, был заменен язык интерфейса, удалены ненужные блоки, улучшен дизайн, исправлены ошибки. -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,7 +8,7 @@
   />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Maxim Oliva - Web Developer (Rickrolled)</title>
+  <title>Шохрух Мирзоев - Web Developer (Rickrolled)</title>
 
   <!-- Google Fonts -->
   <link
@@ -15,7 +16,6 @@
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap"
   >
 
-  <!-- Font Awesome for Icons -->
   <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -24,13 +24,9 @@
           referrerpolicy="no-referrer"
   >
 
-  <!-- AOS for Scroll Animations (optional) -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
-    /* =============================
-       1) GLOBAL RESET & BASE STYLES
-    ============================== */
     * {
       margin: 0;
       padding: 0;
@@ -41,12 +37,12 @@
       line-height: 1.6;
       transition: background-color 0.3s, color 0.3s;
     }
-    /* Темная тема по умолчанию */
+
     body {
       background-color: #1a1a1a;
       color: #e0e0e0;
     }
-    /* Светлая тема при добавлении класса .light-mode */
+
     body.light-mode {
       background-color: #fffbea;
       color: #333;
@@ -56,104 +52,75 @@
       text-decoration: none;
     }
     a:hover {
-      text-decoration: none; /* Убираем стандартное подчёркивание */
+      text-decoration: none;
     }
          {
-      overflow: hidden; /* Отключение прокрутки фона при открытии модальных окон */
+      overflow: hidden;
     }
 
-    /* =============================
-       2) THEME TOGGLE
-    ============================== */
     .theme-toggle-container {
-      position: fixed;
-      bottom: 20px;
-      right: 80px; /* Смещение вправо, чтобы не перекрывать аватарку */
-      z-index: 1002;
+      width: 52px;
+      height: 52px;
       display: flex;
       align-items: center;
-      background: rgba(156, 39, 176, 0.4); /* Полупрозрачный фиолетовый */
-      padding: 5px 10px;
-      border-radius: 25px;
+      justify-content: center;
+      background: rgba(156, 39, 176, 0.4);
+      border-radius: 50%;
       backdrop-filter: blur(5px);
-      transition: background 0.3s;
+      transition: background 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      margin-left: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
     body.light-mode .theme-toggle-container {
-      background: rgba(218, 186, 124, 0.4); /* Полупрозрачный жёлтый */
+      background: rgba(218, 186, 124, 0.4);
     }
     .theme-toggle-container label {
       display: flex;
       align-items: center;
       cursor: pointer;
       position: relative;
-      width: 60px;
-      height: 34px;
     }
     .theme-toggle-container input {
       opacity: 0;
       width: 0;
       height: 0;
     }
-    .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 34px;
+    .theme-icon {
+      font-size: 1.2rem;
+      color: #fff;
+      transition: transform 0.3s;
     }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
+    body.light-mode .theme-icon {
+      color: #333;
     }
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-    input:focus + .slider {
-      box-shadow: 0 0 1px #2196F3;
-    }
-    input:checked + .slider:before {
-      transform: translateX(26px);
+    .theme-toggle-container:hover .theme-icon {
+      transform: scale(1.1);
     }
 
-    /* =============================
-       3) HEADER
-    ============================== */
+
     header {
       background: linear-gradient(135deg, rgb(5, 0, 5), rgba(28, 5, 48, 0.97));
       color: #ffffff;
       text-align: center;
       padding: 2.5rem 0;
       transition: background 0.3s;
-      position: relative; /* Важно, чтобы sticky внутри работал корректно */
+      position: relative;
     }
     body.light-mode header {
       background: linear-gradient(135deg, #6cc1ab, #c8c661);
       color: #ffffff;
     }
 
-    /*
-      Новый контейнер для аватарки — вместо .fixed-avatar
-      сделаем .avatar-container, где разместим .profile-avatar
-    */
+
     .avatar-container {
-      /* Можно добавить минимальную высоту, если нужно дополнительное пространство */
       min-height: 60px;
-      margin-bottom: 1rem; /* Чтобы аватарка не прилипала прямо к тексту */
+      margin-bottom: 1rem;
     }
 
     .profile-avatar {
       position: sticky;
-      top: 0; /* Будет прилипать к верхней части при скролле */
+      top: 0;
       width: 60px;
       height: 60px;
       border-radius: 50%;
@@ -201,11 +168,14 @@
       text-decoration: none;
       transition: color 0.3s;
       display: flex;
-      align-items: center; /* Выравнивание иконки и текста по центру */
+      align-items: center;
     }
     nav a i {
       margin-right: 8px; 
       font-size: 1.2rem;
+    }
+    .telegram-icon {
+      font-size: 2rem;
     }
     nav a::after {
       content: '';
@@ -220,13 +190,13 @@
     nav a:hover::after {
       width: 100%;
     }
+    .no-hover::after {
+      display: none;
+    }
     body.light-mode nav a::after {
       background: #333;
     }
 
-    /* =============================
-       4) MAIN CONTAINER
-    ============================== */
     .container {
       display: flex;
       min-height: 100vh;
@@ -236,19 +206,16 @@
       padding: 0 1.5rem;
     }
 
-    /* =============================
-       5) MAIN CONTENT
-    ============================== */
     .main-content {
       flex: 1;
-      background-color: rgba(42, 42, 42, 0.85); /* Полупрозрачный тёмный фон */
+      background-color: rgba(42, 42, 42, 0.85);
       padding: 1.5rem 2rem;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.5);
       transition: background-color 0.3s;
     }
     body.light-mode .main-content {
-      background-color: rgba(255, 255, 255, 0.85); /* Полупрозрачный светлый фон */
+      background-color: rgba(255, 255, 255, 0.85);
       color: #333;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
@@ -277,9 +244,6 @@
       line-height: 1.6;
     }
 
-    /* =============================
-       6) GRID (SKILLS / PROJECTS)
-    ============================== */
     .grid-cards {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -289,7 +253,7 @@
     .card {
       display: flex;
       flex-direction: column;
-      background: rgba(58, 58, 58, 0.85); /* Полупрозрачный тёмный фон */
+      background: rgba(58, 58, 58, 0.85);
       padding: 1rem;
       border-radius: 10px;
       transition: transform 0.3s, box-shadow 0.3s;
@@ -297,7 +261,7 @@
       min-height: 170px;
     }
     body.light-mode .card {
-      background-color: rgba(240, 240, 240, 0.85); /* Полупрозрачный светлый фон */
+      background-color: rgba(240, 240, 240, 0.85);
       color: #333;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
@@ -358,18 +322,37 @@
     body.light-mode .card .cta-button:hover {
       background-color: #fcd45d;
     }
+    .modal-button {
+      background: transparent;
+      border: 1px solid #ba68c8;
+      color: #ba68c8;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      transition: background 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+    .modal-button:hover {
+      background: #ba68c8;
+      color: #fff;
+    }
+    body.light-mode .modal-button {
+      border-color: #f7b42c;
+      color: #f7b42c;
+    }
+    body.light-mode .modal-button:hover {
+      background: #f7b42c;
+      color: #333;
+    }
 
-    /* =============================
-       7) CONTACT
-    ============================== */
-    .contact-section {
+     .contact-section {
       margin-top: 1.2rem;
     }
     .telegram-button {
       display: inline-flex;
       align-items: center;
       padding: 0.8rem 1.6rem;
-      background-color: rgba(0, 136, 204, 0.9); /* Полупрозрачный синий */
+      background-color: rgba(0, 136, 204, 0.9);
       color: #fff;
       border: none;
       border-radius: 25px;
@@ -380,7 +363,7 @@
       text-decoration: none;
     }
     .telegram-button:hover {
-      background-color: rgba(0, 170, 255, 0.9); /* Полупрозрачный яркий синий */
+      background-color: rgba(0, 170, 255, 0.9);
       transform: translateY(-3px);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
@@ -388,25 +371,22 @@
       margin-right: 0.5rem;
     }
     body.light-mode .telegram-button {
-      background-color: rgba(62, 174, 241, 0.9); /* Полупрозрачный голубой */
+      background-color: rgba(62, 174, 241, 0.9);
     }
     body.light-mode .telegram-button:hover {
-      background-color: rgba(101, 196, 250, 0.9); /* Полупрозрачный яркий голубой */
+      background-color: rgba(101, 196, 250, 0.9);
     }
 
-    /* =============================
-       8) MODAL (POP-UP)
-    ============================== */
     .info-overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.8);
-      display: none; /* Скрыто по умолчанию */
+      display: none;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 1001;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -414,8 +394,11 @@
       display: flex;
       opacity: 1;
     }
+    #avatarOverlay {
+      z-index: 999;
+    }
     .info-modal {
-      background-color: rgba(42, 42, 42, 0.85); /* Полупрозрачный тёмный фон */
+      background-color: rgba(42, 42, 42, 0.85);
       padding: 2rem;
       border-radius: 10px;
       width: 90%;
@@ -427,7 +410,7 @@
       transition: background-color 0.3s;
     }
     body.light-mode .info-modal {
-      background-color: rgba(255, 255, 255, 0.85); /* Полупрозрачный светлый фон */
+      background-color: rgba(255, 255, 255, 0.85);
       color: #333;
     }
     .info-modal h2 {
@@ -435,10 +418,10 @@
       color: #ba68c8;
       font-family: 'Montserrat', sans-serif;
       display: flex;
-      align-items: center; /* Выравнивание иконки и текста по центру */
+      align-items: center;
     }
     .info-modal h2 i {
-      margin-right: 8px; /* Отступ между иконкой и текстом */
+      margin-right: 8px;
       font-size: 1.5rem;
     }
     body.light-mode .info-modal h2 {
@@ -457,7 +440,7 @@
       position: absolute;
       top: 1rem;
       right: 1rem;
-      background: rgba(255, 68, 68, 0.9); /* Полупрозрачный красный */
+      background: rgba(255, 68, 68, 0.9);
       border: none;
       color: #fff;
       padding: 0.5rem 0.75rem;
@@ -467,7 +450,7 @@
       transition: background-color 0.3s, transform 0.3s;
     }
     .close-modal:hover {
-      background: rgba(255, 119, 119, 0.9); /* Полупрозрачный светло-красный */
+      background: rgba(255, 119, 119, 0.9);
       transform: scale(1.1);
     }
     .info-media img,
@@ -482,65 +465,31 @@
       to   { opacity: 1; transform: scale(1); }
     }
 
-    /* =============================
-       9) FOOTER
-    ============================== */
+
     footer {
       text-align: center;
       padding: 1.5rem;
-      background-color: rgba(42, 42, 42, 0.85); /* Полупрозрачный тёмный фон */
+      background-color: rgba(42, 42, 42, 0.85);
       color: #e0e0e0;
       margin-top: 2rem;
       transition: background-color 0.3s;
     }
     body.light-mode footer {
-      background-color: rgba(240, 240, 240, 0.85); /* Полупрозрачный светлый фон */
+      background-color: rgba(240, 240, 240, 0.85);
       color: #333;
     }
 
-    /* =============================
-       10) RESPONSIVE MEDIA QUERIES
-    ============================== */
+
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
-      }
-      .theme-toggle-container {
-        bottom: 80px;
-        right: 20px;
-      }
-      .theme-toggle-container label {
-        width: 50px;
-        height: 28px;
-      }
-      .slider:before {
-        height: 20px;
-        width: 20px;
-        left: 4px;
-        bottom: 4px;
-      }
-      input:checked + .slider:before {
-        transform: translateX(26px);
       }
     }
   </style>
 </head>
 <body>
 
-<!-- THEME TOGGLE SWITCH -->
-<div class="theme-toggle-container">
-  <label class="switch">
-    <input type="checkbox" id="themeToggle" aria-label="Переключение темы">
-    <span class="slider"></span>
-  </label>
-</div>
-
-<!-- HEADER -->
 <header>
-  <!--
-    Добавили контейнер для аватарки.
-    Вместо .fixed-avatar теперь img с классом .profile-avatar (и sticky).
-  -->
   <div class="avatar-container">
     <img
             class="profile-avatar"
@@ -551,16 +500,13 @@
     >
   </div>
 
-  <h1><i class="fas fa-clipboard-list"></i> Maxim Oliva</h1>
-  <p>Web Developer | Designer | Creator</p>
+  <h1><i class="fas fa-clipboard-list"></i> Шохрух Мирзоев </h1>
+  <p>Веб-разработчик | Дизайнер | Создатель
+    </p>
   <nav>
-    <!-- Навигационные ссылки -->
-    <a href="#about"><i class="fas fa-user"></i> About</a>
-    <a href="#skills"><i class="fas fa-tools"></i> Skills</a>
-    <a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a>
-    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
 
-    <!-- GitHub и LinkedIn в верхней навигации -->
+    <a href="#contact"><i class="fas fa-envelope"></i> Контакты </a>
+
     <a href="https://github.com/smworklair" target="_blank" aria-label="GitHub">
       <i class="fab fa-github"></i> GitHub
     </a>
@@ -573,177 +519,113 @@
     </a>
     <a
           href="https://t.me/+2nv04inVqSVjNmI6"
-            target="_blank"
-            aria-label="Telegram" >
-      
-            <i class="fab fa-Telegram"></i> Telegram FEED
+                class="no-hover"
+                target="_blank"
+                aria-label="Contact via Telegram"
+        >
+          <i class="fab fa-telegram-plane telegram-icon"></i>
 
             </a>
+    
+    <div class="theme-toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="themeToggle" aria-label="Переключение темы">
+        <i class="fas fa-moon theme-icon"></i>
+      </label>
+    </div>
       
   </nav>
 </header>
 
-<!-- CONTAINER -->
 <div class="container">
-  <!-- MAIN CONTENT -->
   <main class="main-content">
-    <h1><i class="fas fa-clipboard-list"></i> Welcome to My Portfolio</h1>
-    <p>Showcase your projects, blog posts, or anything else here!</p>
 
-    <!-- ABOUT SECTION -->
     <section id="about" class="section">
-      <h2><i class="fas fa-user"></i> About Me</h2>
+      <h2><i class="fas fa-user"></i> Обо Mнe</h2>
       <p>
-        Hello! I'm Maxim, a passionate Web Developer based in London.
-        I specialize in creating dynamic, responsive, user-friendly
-        websites that provide seamless user experiences.
+        Здравствуйте! Меня зовут Максим, я увлеченный веб-разработчик из Лондона. Я специализируюсь на создании динамичных, адаптивных и удобных для пользователя веб-сайтов, обеспечивающих бесперебойную работу сайта.
       </p>
     </section>
 
-    <!-- SKILLS SECTION -->
-    <section id="skills" class="section">
-      <h2><i class="fas fa-tools"></i> Skills</h2>
-      <div class="grid-cards">
-        <!-- SKILL 1 -->
-        <div class="card">
-          <h3><i class="fab fa-html5"></i> HTML &amp; CSS</h3>
-          <p>Crafting semantic markup & flexible layouts.</p>
-          <button
-                  class="cta-button open-info"
-                  data-title="HTML & CSS"
-                  data-text="Expert in semantic HTML, responsive CSS, plus cross-browser testing & Sass."
-
-          >
-            <i class="fas fa-info-circle"></i> More Info
-          </button>
-        </div>
-        <!-- SKILL 2 -->
-        <div class="card">
-          <h3><i class="fab fa-js"></i> JavaScript</h3>
-          <p>Interactive web apps, ES6+ features.</p>
-          <button
-                  class="cta-button open-info"
-                  data-title="JavaScript"
-                  data-text="Proficient in DOM manipulation, async/await, building dynamic single-page apps, etc."
-
-          >
-            <i class="fas fa-info-circle"></i> More Info
-          </button>
-        </div>
-        <!-- SKILL 3 -->
-        <div class="card">
-          <h3><i class="fab fa-react"></i> React.js</h3>
-          <p>Building scalable front-end apps with React hooks.</p>
-          <button
-                  class="cta-button open-info"
-                  data-title="React.js"
-                  data-text="Developing single-page apps with React, focusing on performance & best practices."
-                  data-media='[]'
-          >
-            <i class="fas fa-info-circle"></i> More Info
-          </button>
-        </div>
-        <!-- SKILL 4 -->
-        <div class="card">
-          <h3><i class="fab fa-node"></i> Node.js &amp; Express</h3>
-          <p>Robust back-end services & REST APIs.</p>
-          <button
-                  class="cta-button open-info"
-                  data-title="Node.js & Express"
-                  data-text="Full-stack solutions with Node.js, Express, database integration & JWT auth, etc."
-                  data-media='[]'
-          >
-            <i class="fas fa-info-circle"></i> More Info
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS SECTION -->
     <section id="projects" class="section">
       <h2><i class="fas fa-project-diagram"></i> Projects</h2>
       <div class="grid-cards">
-        <!-- PROJECT 1 -->
-        <div class="card">
-          <h3><i class="fas fa-briefcase"></i> Portfolio Website</h3>
-          <p>A fully responsive personal portfolio showcasing my projects & skills.</p>
-          <button
-                  class="cta-button open-info"
-                  data-title="Portfolio Website"
-                  data-text="Built with HTML, CSS, and JS. Features modals & smooth scrolling, highlighting personal skill sets & code examples."
-          >
-            <i class="fas fa-info-circle"></i> More Info
-          </button>
-        </div>
-        <!-- PROJECT 2 -->
-        <div class="card">
-          <h3><i class="fas fa-shopping-cart"></i> E-commerce App</h3>
-          <p>Full-stack e-commerce platform with payment integration & user auth.</p>
-          <button
-                  class="cta-button open-info"
-                  data-title="E-commerce App"
-                  data-text="React front-end, Node.js/Express back-end, integrated payments, secure user authentication."
 
-          >
-            <i class="fas fa-info-circle"></i> More Info
-          </button>
-        </div>
-        <!-- PROJECT 3 -->
         <div class="card">
-          <h3><i class="fas fa-comments"></i> Chat Application</h3>
-          <p>Amazing real-time chat using WebSockets and Node.js!</p>
+          <h3><i class="fas fa-briefcase"></i>Веб-Разработка</h3>
+          <p>Разрабатывая сайты,телеграмм боты, исправляю ошибки.Моя задача - сделать именно так как вы хотите</p>
           <button
                   class="cta-button open-info"
-                  data-title="Chat Application"
-                  data-text="Utilizes Socket.io for real-time messaging, Node.js server, channels & direct messages, plus a React front-end."
+                  data-title="Веб-разработка"
+                  data-text="Cоздаю сайты с использованием HTML, CSS и JS. Включает модальные окна и плавную прокрутку, демонстрируя личные навыки и примеры кода."
+          >
+            <i class="fas fa-info-circle"></i> Подробнее
+          </button>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-shopping-cart"></i> Сайты и боты для продаж</h3>
+          <p>Оптимизирую или создам для вас сайт или Телеграмм бота для продаж, рекламы ваших товаров,хороший дизайн </p>
+          <button
+                  class="cta-button open-info"
+                  data-title="Сайты и боты для продаж "
+                  data-text="Фронтенд на React, бэкенд на Node.js/Express, интегрированные платежи, безопасная аутентификация пользователей."
+          >
+            <i class="fas fa-info-circle"></i> Подробнее
+          </button>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-comments"></i> Чаты </h3>
+          <p>Вы сможете в реальном времени отвечать на вопросы ваших клиентов через сайт или телеграмм бота</p>
+          <button
+                  class="cta-button open-info"
+                  data-title="Чаты"
+                  data-text="Использую Socket.io для обмена сообщениями в реальном времени, сервер на Node.js, каналы и личные сообщения, а также фронтенд на React."
                   data-media='[]'
           >
-            <i class="fas fa-info-circle"></i> More Info
+            <i class="fas fa-info-circle"></i> Подробнее
           </button>
         </div>
-        <!-- PROJECT 4 -->
         <div class="card">
-          <h3><i class="fas fa-blog"></i> Blog Platform</h3>
-          <p>A multi-user blogging platform with comment & media support.</p>
+          <h3><i class="fas fa-blog"></i> Платформа для блога</h3>
+          <p>Многопользовательская платформа для ведения блогов с поддержкой комментариев и медиафайлов</p>
           <button
                   class="cta-button open-info"
-                  data-title="Blog Platform"
-                  data-text="Full CRUD with user roles, file uploads, SEO-friendly URLs, and more."
+                  data-title="Плаформа для блога"
+                  data-text="Полноценная функция CRUD с ролями пользователей, загрузкой файлов, SEO-оптимизированными URL-адресами и многим другим."
 
           >
-            <i class="fas fa-info-circle"></i> More Info
+            <i class="fas fa-info-circle"></i> Подробнее
           </button>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
     <section id="contact" class="section">
-      <h2><i class="fas fa-envelope"></i> Contact</h2>
+      <h2><i class="fas fa-envelope"></i> Контакты </h2>
       <p>
-        I'm looking forward to hearing about your projects and discussing
-        how I can help bring them to life. Feel free to contact me via Telegram directly:
+        Я с нетерпением жду возможности узнать о ваших проектах и
+        обсудить, как я могу помочь воплотить их в жизнь. Не стесняйтесь связаться со мной напрямую через Telegram:
+
       </p>
       <div class="contact-section">
         <a
-                href="https://t.me/m/6nSE254TYmYy"
+    J            href="https://t.me/m/6nSE254TYmYy"
                 class="telegram-button"
                 target="_blank"
                 aria-label="Contact via Telegram"
         >
-          <i class="fab fa-telegram-plane"></i> Send a Telegram
+          <i class="fab fa-telegram-plane"></i> Telegram
         </a>
       </div>
     </section>
   </main>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <p>&copy; 2024 Maxim Oliva. All rights reserved.</p>
+  <p>&copy; 2024 Шохрух Мирзоев. Все права защищены .</p>
 </footer>
 
-<!-- MODAL OVERLAY -->
 <div
         class="info-overlay"
         id="infoOverlay"
@@ -758,12 +640,10 @@
     <h2 id="infoTitle"><i class="fas fa-project-diagram"></i> Modal Title</h2>
     <p id="infoText">Modal content goes here...</p>
     <div id="infoMedia" class="info-media">
-      <!-- Dynamically loaded images or videos go here -->
     </div>
   </div>
 </div>
 
-<!-- Модальное окно при клике на аватарку (можно оставить или убрать) -->
 <div
         class="info-overlay"
         id="avatarOverlay"
@@ -775,33 +655,30 @@
     <button class="close-modal" id="closeAvatarInfoBtn" aria-label="Close Modal">
       &times;
     </button>
-    <h2 id="avatarInfoTitle"><i class="fas fa-user"></i> Maxim Oliva</h2>
-    <p>Web Developer with a passion for creating dynamic and responsive websites.</p>
-    <p><a href="mailto:smworklair@gmail.com">smworklair@gmail.com</a></p>
-    <p>London, UK</p>
+    <h2 id="avatarInfoTitle"><i class="fas fa-user"></i>  Шохрух Мирзоев </h2>
+    <p>Веб-разработчик, увлеченный созданием динамичных и адаптивных веб-сайтов.</p>
+    <p>href="mailto:smworklair@gmail.com">Отправить письмо/a> </p>
     <button
-            class="cta-button open-info"
-            data-title="More About Me"
-            data-text="I love building visually appealing & interactive websites, focusing on user experience & performance. Skilled in HTML, CSS, JavaScript, React, Node.js, & more."
+            class="cta-button modal-button open-info"
+            data-title="Больше обо мне"
+            data-text="Я люблю создавать визуально привлекательные и интерактивные веб-сайты, уделяя особое внимание пользовательскому опыту и производительности. Владею HTML, CSS, JavaScript, React, Node.js и другими технологиями.
+"
             data-media='[]'
     >
-      <i class="fas fa-info-circle"></i> More About Me
+      <i class="fas fa-info-circle"></i> Больше обо мне
     </button>
   </div>
 </div>
 
-<!-- AOS Library Script (optional) -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 
-<!-- Main JavaScript -->
 <script defer>
   document.addEventListener('DOMContentLoaded', () => {
-    // Initialize AOS if available
+
     if (typeof AOS !== 'undefined') {
       AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
     }
 
-    // Theme Toggle with LocalStorage
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('theme') || 'dark';
 
@@ -812,14 +689,26 @@
       themeToggle.checked = false;
     }
 
+    const themeIcon = document.querySelector('.theme-icon');
+    if (savedTheme === 'light') {
+      themeIcon.className = 'fas fa-sun theme-icon';
+    } else {
+      themeIcon.className = 'fas fa-moon theme-icon';
+    }
+
     function toggleTheme() {
       document.body.classList.toggle('light-mode');
       const isLightMode = document.body.classList.contains('light-mode');
       localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+
+      if (isLightMode) {
+        themeIcon.className = 'fas fa-sun theme-icon';
+      } else {
+        themeIcon.className = 'fas fa-moon theme-icon';
+      }
     }
     themeToggle.addEventListener('change', toggleTheme);
 
-    // Основная модальная логика
     const infoOverlay = document.getElementById('infoOverlay');
     const closeInfoBtn = document.getElementById('closeInfoBtn');
     const infoTitleEl = document.getElementById('infoTitle');
@@ -827,7 +716,6 @@
     const infoMediaEl = document.getElementById('infoMedia');
     const openInfoButtons = document.querySelectorAll('.open-info');
 
-    // Rickroll iframe
     function createRickroll() {
       const rickIframe = document.createElement('iframe');
       rickIframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ";
@@ -844,7 +732,6 @@
       infoTextEl.textContent = text;
       infoMediaEl.innerHTML = '';
 
-      // Если есть медиа, добавляем его
       if (media && Array.isArray(media)) {
         media.forEach(item => {
           if (item.type === 'image') {
@@ -867,7 +754,6 @@
         });
       }
 
-      // Всегда добавляем рикролл в конец, чтобы наверняка :)
       infoMediaEl.appendChild(createRickroll());
 
       infoOverlay.classList.add('active');
@@ -901,13 +787,12 @@
       evt.stopPropagation();
     });
 
-    // Логика для модального окна при клике на аватарку
     const avatar = document.getElementById('avatar');
     const avatarOverlay = document.getElementById('avatarOverlay');
     const closeAvatarInfoBtn = document.getElementById('closeAvatarInfoBtn');
 
     function openAvatarModal() {
-      // Добавим рикролл и в модалку аватарки
+
       const avatarInfoMedia = avatarOverlay.querySelector('.info-media');
       if (avatarInfoMedia) {
         avatarInfoMedia.innerHTML = '';
@@ -942,7 +827,6 @@
       evt.stopPropagation();
     });
 
-    // Закрытие модальных окон при нажатии клавиши Esc
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeInfoModal();
@@ -957,3 +841,5 @@
 </script>
 </body>
 </html>
+
+
